@@ -23,6 +23,34 @@ public class Transaction implements Serializable {
         this.status = status;
     }
 
+    public String getTransactionId() {
+        return transactionId;
+    }
+
+    public LocalDateTime getTimestamp() {
+        return timestamp;
+    }
+
+    public String getFromAccount() {
+        return fromAccount;
+    }
+
+    public String getToAccount() {
+        return toAccount;
+    }
+
+    public double getAmount() {
+        return amount;
+    }
+
+    public TransactionType getType() {
+        return type;
+    }
+
+    public TransactionStatus getStatus() {
+        return status;
+    }
+
     public static String generateTransactionId() {
         UUID uuid = UUID.randomUUID();
         return uuid.toString();

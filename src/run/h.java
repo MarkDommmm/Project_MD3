@@ -4,8 +4,10 @@ import Bank.ATM;
 import Bank.BankSystem;
 import Database.IOFile;
 import Model.Account;
+import Model.Transaction;
 import Model.User;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +17,7 @@ public class h {
         IOFile<User> userFile = new IOFile<>();
         IOFile<BankSystem> bankSystemIOFile = new IOFile<>();
         IOFile<Account> accountIOFile = new IOFile<>();
+        IOFile<Transaction> transactionIOFile = new IOFile<>();
 
         List<ATM> atmList1 = atmioFile.readFromFile(IOFile.LISTATM_FILE);
 
@@ -39,6 +42,7 @@ public class h {
         User user1 = new User("hieu", "hieu");
         Account account3 = new Account("ACC777", 77, user1);
         Account account4 = new Account("ACC7777", 777, user1);
+
         List<User> users = new ArrayList<>();
         List<Account> accountList = new ArrayList<>();
         users.add(user);
@@ -47,6 +51,20 @@ public class h {
         users.add(user1);
         accountList.add(account3);
         accountList.add(account4);
+
+        String transactionId = Transaction.generateTransactionId();
+        LocalDateTime timestamp = LocalDateTime.now();
+        Transaction transaction = new Transaction(
+                transactionId,
+                timestamp,
+                "ACC777",
+                "",
+                10.1,
+                Transaction.TransactionType.WITHDRAWAL,
+                Transaction.TransactionStatus.SUCCESS);
+        List<Transaction> transactionList = new ArrayList<>();
+        transactionList.add(transaction);
+        transactionIOFile.writeToFile(transactionList, IOFile.TRANSACTION_FILE);
 
 
         List<BankSystem> bankSystemList = new ArrayList<>();

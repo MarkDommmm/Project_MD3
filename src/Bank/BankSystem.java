@@ -8,37 +8,56 @@ import Model.User;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
 public class BankSystem implements Serializable {
 
     private List<User> userss;
     private IOFile<User> ioFileUser;
-    private List<Account> accounts;
+    private List<Account> accountss;
     private IOFile<Account> ioFileAccount;
-    private List<Transaction> transactionLists;
+    private List<Transaction> transactionList;
     private IOFile<Transaction> transactionsFile;
 
     public BankSystem() {
-        transactionLists = new ArrayList<>();
-
+//        transactionLists = new Stack<>();
         ioFileUser = new IOFile<>();
         this.userss = ioFileUser.readFromFile(IOFile.LISTUSE_FILE);
-        System.out.println(userss + " Bank");
+        if (userss == null) {
+            userss = new ArrayList<>();
+        } else {
+            System.out.println(userss + " Bank");
+        }
 
         ioFileAccount = new IOFile<>();
-        this.accounts = ioFileAccount.readFromFile(IOFile.LISTACCOUNT_FILE);
-        System.out.println(accounts + " Account");
-
+        this.accountss = ioFileAccount.readFromFile(IOFile.LISTACCOUNT_FILE);
+        if (accountss == null) {
+            accountss = new ArrayList<>();
+        } else {
+            System.out.println(accountss + " Account");
+        }
 
         transactionsFile = new IOFile<>();
-//        this.transactions = transactionsFile.readFromFile(IOFile.TRANSACTION_FILE);
+        transactionList = transactionsFile.readFromFile(IOFile.TRANSACTION_FILE);
+        if (transactionList == null) {
+            transactionList = new ArrayList<>();
+        }else {
+            System.out.println(transactionList+ " transactions");
+        }
+
+
+
     }
 
 
     public void processTransaction(Transaction transaction) {
-        transactionLists.add(transaction);
-        transactionsFile.writeToFile(transactionLists, IOFile.TRANSACTION_FILE);
+        transactionList.add(transaction);
+        transactionsFile.writeToFile(transactionList, IOFile.TRANSACTION_FILE);
     }
+    public List<Transaction> getTransaction(){
+        return  transactionList;
+    }
+
 
     public User authenticateUser(String username, String password) {
         for (User user : userss) {
@@ -52,7 +71,7 @@ public class BankSystem implements Serializable {
     public List<Account> getUserAccounts(String username) {
         List<Account> userAccounts = new ArrayList<>();
 
-        for (Account account : accounts) {
+        for (Account account : accountss) {
             if (account.getOwner().getUsername().equals(username)) {
                 userAccounts.add(account);
             }
@@ -61,7 +80,7 @@ public class BankSystem implements Serializable {
     }
 
     public Account getAccountByNumber(String accountNumber) {
-        for (Account account : accounts) {
+        for (Account account : accountss) {
             if (account.getAccountNumber().equals(accountNumber)) {
                 return account;
             }
@@ -72,7 +91,7 @@ public class BankSystem implements Serializable {
     public boolean withdrawal(Account account, double amount) {
         if (account.getBalance() >= amount) {
             account.setBalance(account.getBalance() - amount);
-            ioFileAccount.writeToFile(accounts, IOFile.LISTACCOUNT_FILE);
+            ioFileAccount.writeToFile(accountss, IOFile.LISTACCOUNT_FILE);
             return true;
         }
         return false;
@@ -82,7 +101,7 @@ public class BankSystem implements Serializable {
         if (fromAccount.getBalance() >= amount) {
             fromAccount.setBalance(fromAccount.getBalance() - amount);
             ToAccount.setBalance(ToAccount.getBalance() + amount);
-            ioFileAccount.writeToFile(accounts, IOFile.LISTACCOUNT_FILE);
+            ioFileAccount.writeToFile(accountss, IOFile.LISTACCOUNT_FILE);
             return true;
 
         }
@@ -92,7 +111,7 @@ public class BankSystem implements Serializable {
     public boolean deposit(Account account, double amount) {
         if (account != null && amount > 0) {
             account.setBalance(account.getBalance() + amount);
-            ioFileAccount.writeToFile(accounts, IOFile.LISTACCOUNT_FILE);
+            ioFileAccount.writeToFile(accountss, IOFile.LISTACCOUNT_FILE);
             return true;
         }
         return false;
@@ -121,7 +140,7 @@ public class BankSystem implements Serializable {
     public String toString() {
         return "BankSystem{" +
                 "users=" + userss +
-                ", accounts=" + accounts +
+                ", accounts=" + accountss +
                 '}';
     }
 

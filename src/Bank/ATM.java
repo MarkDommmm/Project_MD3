@@ -13,6 +13,7 @@ import java.time.format.DateTimeFormatter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
 
 public class ATM implements Serializable {
@@ -29,6 +30,9 @@ public class ATM implements Serializable {
 
     }
 
+    public ATM() {
+    }
+
     public double getBalanceAtm() {
         return balanceAtm;
     }
@@ -40,6 +44,46 @@ public class ATM implements Serializable {
     public String getAtmID() {
         return atmID;
     }
+
+    public void viewTransactionHistory() {
+        if (currentUser == null) {
+            System.out.println("Vui lòng đăng nhập để xem lịch sử giao dịch.");
+            return;
+        }
+        List<Account> accounts = bankSystem.getUserAccounts(currentUser.getUsername());
+        if (accounts.isEmpty()) {
+            System.err.println("╔═════════════════════════════╗");
+            System.err.println("║Người dùng không có tài khoản║");
+            System.err.println("╚═════════════════════════════╝");
+            return;
+        }
+
+        Account account = selectAccount(accounts);
+        if (account == null) {
+            System.err.println("╔═════════════════════════════╗");
+            System.err.println("║   Tài khoản không hợp lệ.   ║");
+            System.err.println("╚═════════════════════════════╝");
+
+        }
+
+
+        System.out.println("╔═════════════════════════════════════════════════════╗");
+        System.out.println("║           Lịch sử giao dịch của tài khoản           ║");
+        System.out.println("╠═════════════════════════════════════════════════════╣");
+
+        for (Transaction transaction : bankSystem.getTransaction()) {
+            if (account.getAccountNumber().equals(transaction.getFromAccount())) {
+                System.out.println("║ Mã giao dịch: " + transaction.getTransactionId());
+                System.out.println("║ Ngày & Giờ: " + transaction.getTimestamp());
+                System.out.println("║ Số tài khoản : " + transaction.getFromAccount());
+                System.out.println("║ Giao dịch : " + transaction.getType());
+                System.out.println("║ Số tiền giao dịch: " + transaction.getAmount());
+                System.out.println("║ Trạng thái: " + transaction.getStatus());
+                System.out.println("╚═══════════════════════════════════════════╝");
+            }
+        }
+    }
+
 
     public void login() {
         boolean check = false;
@@ -77,7 +121,7 @@ public class ATM implements Serializable {
         }
         while (true) {
             System.out.println("╔═════════════════════════════╗");
-            System.out.println("║ Xin chào, " + currentUser.getUsername() + "             ║");
+            System.out.println("║ Xin chào, " + currentUser.getUsername());
             System.out.println("║ Chọn một tùy chọn giao dịch:║");
             System.out.println("╠═════════════════════════════╣");
             System.out.println("║   1. Rút tiền               ║");
@@ -85,6 +129,7 @@ public class ATM implements Serializable {
             System.out.println("║   3. Chuyển tiền            ║");
             System.out.println("║   4. Kiểm tra số dư         ║");
             System.out.println("║   5. Thay đỗi mã PIN        ║");
+            System.out.println("║   6. Xem lịch sử giao dịch  ║");
             System.out.println("║   0. Thoát                  ║");
             System.out.println("╚═════════════════════════════╝");
             System.out.print("Mời lựa chọn: ");
@@ -121,6 +166,12 @@ public class ATM implements Serializable {
                     System.out.println("╚════════════════════════════╝");
                     changePing();
                     break;
+                case 6:
+                    System.out.println("╔════════════════════════════╗");
+                    System.out.println("║    Xem lịch sử giao dịch   ║");
+                    System.out.println("╚════════════════════════════╝");
+                    viewTransactionHistory();
+                    break;
                 case 0:
                     System.out.println("╔════════════════════════════╗");
                     System.out.println("║          Đã thoát.         ║");
@@ -156,15 +207,15 @@ public class ATM implements Serializable {
 
         }
 
-        if (getBalanceAtm() >= money){
+        if (getBalanceAtm() >= money) {
             setBalanceAtm(getBalanceAtm() - money);
-        }else {
+        } else {
             System.err.println("╔═════════════════════════════╗");
             System.err.println("║  Số dư ATM không đủ để rút. ║");
             System.err.println("╚═════════════════════════════╝");
             return;
         }
-        System.out.println("ATM: " +getAtmID() + "Balance: " +getBalanceAtm() + "");
+        System.out.println("ATM: " + getAtmID() + "Balance: " + getBalanceAtm() + "");
         if (bankSystem.withdrawal(account, money)) {
 
 
@@ -385,6 +436,7 @@ public class ATM implements Serializable {
             return null;
         }
     }
+
 
     @Override
     public String toString() {

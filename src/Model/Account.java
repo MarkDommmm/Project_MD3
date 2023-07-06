@@ -1,14 +1,17 @@
 package Model;
 
 import java.io.Serializable;
+import java.util.Stack;
 
 public class Account implements Serializable {
-    private  String accountNumber;
-    public  double balance;
-    private  User owner;
+    private String accountNumber;
+    public double balance;
+    private User owner;
 
     public Account() {
     }
+
+
 
     public Account(String accountNumber, double balance, User owner) {
         this.accountNumber = accountNumber;
