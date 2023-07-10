@@ -2,34 +2,34 @@ package Model;
 
 import java.io.Serializable;
 
-public class User implements Serializable {
-    private Integer cardNumbers;
-    private Integer pin;
+public class Users implements Serializable {
+    private String username;
+    private String password;
 
-    public User(Integer cardNumbers, Integer pin) {
-        this.cardNumbers = cardNumbers;
-        this.pin = pin;
+    public Users(String username, String password) {
+        this.username = username;
+        this.password = password;
     }
 
-    public User() {
+    public Users() {
 
     }
 
-    public Integer getCardNumbers() {
-        return cardNumbers;
+    public String getUsername() {
+        return username;
     }
 
-    public Integer getPin() {
-        return pin;
+    public String getPassword() {
+        return password;
     }
 
-    public void setPin(Integer pin) {
-        this.pin = pin;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
 
     @Override
     public String toString() {
-        return "NumberCard " + getCardNumbers() + "  " + "Pin " + getPin() + "||";
+        return "NumberCard " + getUsername() + "  " + "Pin " + getPassword() + "||";
     }
 }

@@ -1,7 +1,6 @@
 package run;
 
 import Bank.ATM;
-import Bank.BankSystem;
 import Config.InputMethods;
 import Database.IOFile;
 import java.util.List;
@@ -10,7 +9,6 @@ public class Main {
 
     public static void main(String[] args) {
 
-        BankSystem bankSystem = new BankSystem();
         IOFile<ATM> atmioFile = new IOFile<>();
         List<ATM> atmList1 = atmioFile.readFromFile(IOFile.LISTATM_FILE);
 

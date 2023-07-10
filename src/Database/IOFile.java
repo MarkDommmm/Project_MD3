@@ -1,14 +1,12 @@
 package Database;
 
-import Model.User;
-
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class IOFile<T> implements Serializable{
     public static final String LISTUSE_FILE = "G:\\ProjectMD3\\ProjectMD3\\src\\Database\\listuse.txt";
-    public static final String LISTACCOUNT_FILE = "G:\\ProjectMD3\\ProjectMD3\\src\\Database\\listaccount.txt";
+    public static final String LISTCARD_FILE = "G:\\ProjectMD3\\ProjectMD3\\src\\Database\\listcard.txt";
     public static final String LISTATM_FILE = "G:\\ProjectMD3\\ProjectMD3\\src\\Database\\listATM.txt";
     public static  final String BANKSYSTEM_FILE = "G:\\ProjectMD3\\ProjectMD3\\src\\Database\\bankSystem.txt";
      public static final String TRANSACTION_FILE = "G:\\ProjectMD3\\ProjectMD3\\src\\Database\\transaction.txt";
@@ -77,5 +75,10 @@ public class IOFile<T> implements Serializable{
             }
         }
         return list;
+    }
+
+    public List<T> refeshData(List<T> list, String filePath){
+        writeToFile(list, filePath);
+        return readFromFile(filePath);
     }
 }
