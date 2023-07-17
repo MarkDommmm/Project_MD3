@@ -332,7 +332,7 @@ public class ATM implements Serializable {
         double money = InputMethods.getDouble();
         if (money > 5000000) {
             System.err.println("\n╔═════════════════════════════════════════╗");
-            System.err.println("║    Số tiền rút quá hạn mức của thẻ      ║");
+            System.err.println("║    Số tiền rút tối đa 5,000,000 VNĐ     ║");
             System.err.println("╚═════════════════════════════════════════╝");
             return;
         } else if (money < 20000) {
@@ -352,11 +352,10 @@ public class ATM implements Serializable {
             System.err.println("Hạn mức rút tiền trong ngày là " + formatBalance().format(card.getMaxWithdrawalPerDay()) + " VNĐ");
             return;
         }
-        System.out.println(formatBalance().format(card.getWitHDrawalCountLimit()) + "hạn mức của  bạn ");
         if (getBalanceAtm() >= money) {
             setBalanceAtm(getBalanceAtm() - money);
         } else {
-            System.err.println("╔═════════════════════════════╗");
+            System.err.println("\n╔═════════════════════════════╗");
             System.err.println("║  Số dư ATM không đủ để rút. ║");
             System.err.println("╚═════════════════════════════╝");
             return;
@@ -439,7 +438,9 @@ public class ATM implements Serializable {
         }
         Card sourceCard = selectAccount(cards);
         if (sourceCard == null) {
-            System.out.println("Tài khoản không hợp lệ.");
+            System.err.println("\n╔═════════════════════════════╗");
+            System.err.println("║   Tài khoản không hợp lệ.   ║");
+            System.err.println("╚═════════════════════════════╝");
             return;
         }
         System.out.println("╔════════════════════════════════════════════╗");

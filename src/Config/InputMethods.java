@@ -6,8 +6,8 @@ import java.util.Scanner;
 public class InputMethods {
         private static final String ERROR_ALERT = "===>> Định dạng không hợp lệ, hoặc ngoài phạm vi! Vui lòng thử lại....";
         public static final String EMPTY_ALERT = "===>> Trường nhập vào không thể để trống! Vui lòng thử lại....";
-        public static final String ERROR_NUMBER = "===>> Vui lòng nhập số nguyên lớn hơn 0";
-        public static final String ERROR_SONGID = "===>> Id bài hát phải bắt đầu bằng kí tự S và có đúng 4 kí tự";
+//        public static final String ERROR_NUMBER = "===>> Vui lòng nhập số nguyên lớn hơn 0";
+//        public static final String ERROR_SONGID = "===>> Id bài hát phải bắt đầu bằng kí tự S và có đúng 4 kí tự";
         /*========================================Input Method Start========================================*/
 
         /**
@@ -129,29 +129,29 @@ public class InputMethods {
         /**
          * pressAnyKey()  Press any key to continue....
          */
-        public static void pressAnyKey() {
-            getInput();
-        }
-        //kiểm tra số nhập vào có lớn hon 0
-        public static int getPositiveInteger(){
-            while (true) {
-                int result = getInteger();
-                if (result > 0) {
-                    return result;
-                }
-                System.err.println(ERROR_NUMBER);
-            }
-        }
-        // kiểm tra id có đúng định dạng không
-        public static String getSongId(){
-            while (true) {
-                String result = getString();
-               if(result.startsWith("S")&&result.length()==4){
-                   return result;
-               }
-                System.err.println(ERROR_SONGID);
-            }
-        }
+//        public static void pressAnyKey() {
+//            getInput();
+//        }
+//        //kiểm tra số nhập vào có lớn hon 0
+//        public static int getPositiveInteger(){
+//            while (true) {
+//                int result = getInteger();
+//                if (result > 0) {
+//                    return result;
+//                }
+//                System.err.println(ERROR_NUMBER);
+//            }
+//        }
+//        // kiểm tra id có đúng định dạng không
+//        public static String getSongId(){
+//            while (true) {
+//                String result = getString();
+//               if(result.startsWith("S")&&result.length()==4){
+//                   return result;
+//               }
+//                System.err.println(ERROR_SONGID);
+//            }
+//        }
         /*========================================Other Method========================================*/
     }
 

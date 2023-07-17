@@ -149,15 +149,22 @@ public class BankSystem implements Serializable {
 
     public boolean changePin(Card card, Integer oldPin, Integer newPin) {
         if (!card.getPin().equals(oldPin)) {
-            System.out.println("╔═════════════════════════════════════════════════╗");
-            System.out.println("║       Mã PIN hiện tại không chính xác.          ║");
-            System.out.println("╚═════════════════════════════════════════════════╝");
+            System.err.println("╔═════════════════════════════════════════════════╗");
+            System.err.println("║       Mã PIN hiện tại không chính xác.          ║");
+            System.err.println("╚═════════════════════════════════════════════════╝");
             return false;
         }
         if (card.getPin().equals(newPin)) {
-            System.out.println("╔═════════════════════════════════════════════════╗");
-            System.out.println("║       Mã PIN mới phải khác mã PIN hiện tại.     ║");
-            System.out.println("╚═════════════════════════════════════════════════╝");
+            System.err.println("╔═════════════════════════════════════════════════╗");
+            System.err.println("║       Mã PIN mới phải khác mã PIN hiện tại.     ║");
+            System.err.println("╚═════════════════════════════════════════════════╝");
+            return false;
+        }
+        if (newPin.toString().trim().length() != 4) {
+            System.err.println("╔═════════════════════════════════════════════════╗");
+            System.err.println("║         Mã PIN mới phải có đúng 4 kí tự.        ║");
+            System.err.println("╚═════════════════════════════════════════════════╝");
+            return false;
         }
 
         card.setPin(newPin);
